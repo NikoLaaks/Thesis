@@ -1,6 +1,10 @@
 # Thesis
-Tarkoituksena on tehdä
+Tarkoituksena on tehdä palvelussa, jossa rooleina on oppilas, opettaja ja admin.
+Opettaja pystyy luomaan tehtäviä ja lukemaan oppilaiden vastauksia liittyen tehtävään.
+Oppilas pystyy luomaan vastauksia liittyen tehtävään, lukemaan omia vastauksia ja poistamaan omia vastauksia.
+Admin pystyy tekemään kaikkea.
 Ensimmäisessa vaiheessa luodaa REST palvelu ilman Spring Securityä.
+Toisessa vaiheessa lisätään Spring Security ja suojataan resurssit.
 
 1. Tietokannan suunnittelu
    - User-, Role-, Assignment- ja Submission -taulut
