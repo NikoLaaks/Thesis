@@ -17,3 +17,9 @@ Tällä hetkellä testaukseen käytetty VSCoden Thunder Clientiä, joka on ollut
 Elinalta tullut viesti teoriaosuuden tekstistä ja vaatii parantamista. 
 Sanasto puuttuu ja tekstissä paljon selittämätöntä ammattisanastoa.
 Tekstissä myös sekaisin englantia ja suomea.
+
+## 9.2
+Projektista kirjoitettu alustavat endpointit muistilista.md tiedostoon.
+Endpointit voivat vielä muuttua, mutta näillä pääsee hyvin alkuun.
+Frontendin tämänhetkinen suunnitelma on se, että osa näytetään postmanilla(tai vastaavalla) ja joillekkin osille mahdollisesti tehdään frontend.
+Tämä mietitään tarpeen mukaan, että millä tavalla asiat on helpoin esittää ymmärrettävästi.
