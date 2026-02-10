@@ -23,3 +23,9 @@ Projektista kirjoitettu alustavat endpointit muistilista.md tiedostoon.
 Endpointit voivat vielä muuttua, mutta näillä pääsee hyvin alkuun.
 Frontendin tämänhetkinen suunnitelma on se, että osa näytetään postmanilla(tai vastaavalla) ja joillekkin osille mahdollisesti tehdään frontend.
 Tämä mietitään tarpeen mukaan, että millä tavalla asiat on helpoin esittää ymmärrettävästi.
+
+## 10.2
+Projektissa nyt alustavat endpointit koodattu.
+Swagger toiminnassa, mutta vaatii JsonIgnoret, jotta saa järkevästi toimimaan.
+Ehkä sittenkin helpompi käyttää Thunder Clientia endpointtien testaamiseen.
+Kun endpointit testataan, niin muista tarkistaa mikä kaikki näkyy frontendille(esim salasana).
