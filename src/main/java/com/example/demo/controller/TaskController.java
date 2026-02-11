@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,9 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.Answer;
 import com.example.demo.entity.Task;
+import com.example.demo.entity.User;
 import com.example.demo.repository.AnswerRepository;
 import com.example.demo.repository.TaskRepository;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.service.AnswerDTO;
+import com.example.demo.service.TaskDTO;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -26,6 +31,8 @@ public class TaskController {
     private TaskRepository taskRepository;
     @Autowired
     private AnswerRepository answerRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     // Hae kaikki taskit
     @GetMapping
@@ -40,17 +47,30 @@ public class TaskController {
 
     // Lisää uusi taski
     @PostMapping
-    public Task create(@RequestBody Task task) {
-        return taskRepository.save(task);
+    public ResponseEntity<Void> create(@RequestBody TaskDTO dto) {
+        // Haetaan käyttäjä tietokannasta ID:n perusteella, joka tulee JSON:sta
+        User user = userRepository.findById(dto.getUserId())
+                .orElseThrow(() -> new RuntimeException("Käyttäjää ei löytynyt"));
+        Task task = new Task();
+        task.setTitle(dto.getTitle());
+        task.setDescription(dto.getDescription());
+
+        // Asetetaan haettu käyttäjä taskille
+        task.setUser(user);
+        taskRepository.save(task);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     // Päivitä taski
     @PutMapping("/{id}")
-    public Task update(@PathVariable Long id, @RequestBody Task taskDetails) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody TaskDTO dto) {
         Task task = taskRepository.findById(id).orElseThrow();
-        task.setTitle(taskDetails.getTitle());
-        task.setDescription(taskDetails.getDescription());
-        return taskRepository.save(task);
+        task.setTitle(dto.getTitle());
+        task.setDescription(dto.getDescription());
+        taskRepository.save(task);
+
+        return ResponseEntity.ok().build();
     }
 
     // Poista taski
@@ -61,10 +81,18 @@ public class TaskController {
 
     // Lisää uusi vastaus
     @PostMapping("{id}/answers")
-    public Answer addAnswerToTask(@PathVariable Long id, @RequestBody Answer answer) {
+    public ResponseEntity<Void> addAnswerToTask(@PathVariable Long id, @RequestBody AnswerDTO dto) {
         Task task = taskRepository.findById(id).orElseThrow();
+        User user = userRepository.findById(dto.getUserId())
+                .orElseThrow(() -> new RuntimeException("Käyttäjää ei löytynyt"));
+        Answer answer = new Answer();
+        answer.setContent(dto.getContent());
+
+        answer.setUser(user);
+
         answer.setTask(task);
-        return answerRepository.save(answer);
+        answerRepository.save(answer);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/{id}/answers")

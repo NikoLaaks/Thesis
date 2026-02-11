@@ -29,3 +29,7 @@ Projektissa nyt alustavat endpointit koodattu.
 Swagger toiminnassa, mutta vaatii JsonIgnoret, jotta saa järkevästi toimimaan.
 Ehkä sittenkin helpompi käyttää Thunder Clientia endpointtien testaamiseen.
 Kun endpointit testataan, niin muista tarkistaa mikä kaikki näkyy frontendille(esim salasana).
+
+## 11.2
+DTO-malli otettu käyttöön kontrollereissa testaamisen helpottamiseksi.
+DTO pitää myös tehdä erikseen responseihin, jotta ei palauteta kaikkea tietoa GET endpointeista.
