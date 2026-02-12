@@ -11,6 +11,10 @@
     - Määrittää endpointit
     - Välittää pyyntöjä eteenpäin ja palauttaa vastauksia kyselyihin
     - Luokan päällä on annotaatio @RestController
+4. Service (Liiketoimintalogiikka)
+    - Sisältää sovelluksen ydintoiminnallisuuden ja liiketoimintalogiikan
+    - Keskittää logiikan yhteen paikkaan ja tekee controllerista kevyen
+    - Luokka annotoitu @Service
 
 END OF LIST
 ---

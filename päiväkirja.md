@@ -33,3 +33,6 @@ Kun endpointit testataan, niin muista tarkistaa mikä kaikki näkyy frontendille
 ## 11.2
 DTO-malli otettu käyttöön kontrollereissa testaamisen helpottamiseksi.
 DTO pitää myös tehdä erikseen responseihin, jotta ei palauteta kaikkea tietoa GET endpointeista.
+
+## 12.2
+Lisätty puuttuva service kerros ja samalla toimintalogiikka siirretty sinne controllereista. Nyt kerrostus on oikeaoppinen eli entiteetti -> repository -> service -> controller. Ohjelmaa ei ole vielä testattu kunnolla ja kaikki responseDTO:t puuttuu kokonaan.

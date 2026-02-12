@@ -2,12 +2,12 @@ package com.example.demo.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.Answer;
-import com.example.demo.repository.AnswerRepository;
+import com.example.demo.service.AnswerService;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,25 +18,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/api/answers")
 public class AnswerController {
 
-    @Autowired
-    private AnswerRepository repository;
+    private final AnswerService service;
+
+    public AnswerController(AnswerService service) {
+        this.service = service;
+    }
 
     // Vastauksen haku ID:llä
     @GetMapping("/{id}")
     public Answer getAnswer(@PathVariable Long id) {
-        return repository.findById(id).orElse(null);
+        return service.getAnswerById(id);
     }
 
     // Vastauksen muokkaus
     @PutMapping("/{id}")
     public Answer update(@PathVariable Long id, @RequestBody Answer answerDetails) {
-        Answer answer = repository.findById(id).orElseThrow();
-        answer.setContent(answerDetails.getContent());
-        return repository.save(answer);
+        return service.updateAnswer(id, answerDetails);
     }
 
     @GetMapping("/my")
     public List<Answer> getAnswersByUser(@RequestParam Long userId) {
-        return repository.findByUserId(userId);
+        return service.getAnswersByUser(userId);
     }
 }

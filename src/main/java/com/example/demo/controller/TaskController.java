@@ -14,90 +14,67 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.AnswerDTO;
+import com.example.demo.dto.TaskDTO;
 import com.example.demo.entity.Answer;
 import com.example.demo.entity.Task;
 import com.example.demo.entity.User;
 import com.example.demo.repository.AnswerRepository;
 import com.example.demo.repository.TaskRepository;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.service.AnswerDTO;
-import com.example.demo.service.TaskDTO;
+import com.example.demo.service.TaskService;
 
 @RestController
 @RequestMapping("/api/tasks")
 public class TaskController {
 
-    @Autowired
-    private TaskRepository taskRepository;
-    @Autowired
-    private AnswerRepository answerRepository;
-    @Autowired
-    private UserRepository userRepository;
+    private final TaskService taskService;
+
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
     // Hae kaikki taskit
     @GetMapping
     public List<Task> getAll() {
-        return taskRepository.findAll();
+        return taskService.getAll();
     }
 
     @GetMapping("/{id}")
     public Task getTask(@PathVariable Long id) {
-        return taskRepository.findById(id).orElse(null);
+        return taskService.getTask(id);
     }
 
     // Lisää uusi taski
     @PostMapping
     public ResponseEntity<Void> create(@RequestBody TaskDTO dto) {
-        // Haetaan käyttäjä tietokannasta ID:n perusteella, joka tulee JSON:sta
-        User user = userRepository.findById(dto.getUserId())
-                .orElseThrow(() -> new RuntimeException("Käyttäjää ei löytynyt"));
-        Task task = new Task();
-        task.setTitle(dto.getTitle());
-        task.setDescription(dto.getDescription());
-
-        // Asetetaan haettu käyttäjä taskille
-        task.setUser(user);
-        taskRepository.save(task);
-
+        taskService.createTask(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     // Päivitä taski
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody TaskDTO dto) {
-        Task task = taskRepository.findById(id).orElseThrow();
-        task.setTitle(dto.getTitle());
-        task.setDescription(dto.getDescription());
-        taskRepository.save(task);
-
+        taskService.updateTask(id, dto);
         return ResponseEntity.ok().build();
     }
 
     // Poista taski
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
-        taskRepository.deleteById(id);
+        taskService.deleteTask(id);
     }
 
     // Lisää uusi vastaus
     @PostMapping("{id}/answers")
     public ResponseEntity<Void> addAnswerToTask(@PathVariable Long id, @RequestBody AnswerDTO dto) {
-        Task task = taskRepository.findById(id).orElseThrow();
-        User user = userRepository.findById(dto.getUserId())
-                .orElseThrow(() -> new RuntimeException("Käyttäjää ei löytynyt"));
-        Answer answer = new Answer();
-        answer.setContent(dto.getContent());
-
-        answer.setUser(user);
-
-        answer.setTask(task);
-        answerRepository.save(answer);
+        taskService.addAnswerToTask(id, dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/{id}/answers")
     public List<Answer> getAnswersByTask(@PathVariable Long id) {
-        return answerRepository.findByTaskId(id);
+        return taskService.getAnswerByTask(id);
     }
 
 }
