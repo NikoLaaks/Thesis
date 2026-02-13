@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.dto.UserDTO;
+import com.example.demo.dto.UserRequest;
+import com.example.demo.dto.UserResponse;
 import com.example.demo.entity.User;
+import com.example.demo.mapper.UserMapper;
 import com.example.demo.repository.UserRepository;
 
 @Service
@@ -18,12 +20,15 @@ public class UserService {
     }
 
     // Hae kaikki käyttäjät
-    public List<User> getAll() {
-        return userRepository.findAll();
+    public List<UserResponse> getAll() {
+        return userRepository.findAll()
+                .stream()
+                .map(UserMapper::mapToResponse)
+                .toList();
     }
 
     // Luo uusi käyttäjä
-    public void createUser(UserDTO dto) {
+    public void createUser(UserRequest dto) {
         User user = new User();
         user.setUserName(dto.getUsername());
         user.setPassword(dto.getPassword());
@@ -35,4 +40,5 @@ public class UserService {
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+
 }

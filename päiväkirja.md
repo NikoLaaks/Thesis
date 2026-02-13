@@ -36,3 +36,8 @@ DTO pitää myös tehdä erikseen responseihin, jotta ei palauteta kaikkea tieto
 
 ## 12.2
 Lisätty puuttuva service kerros ja samalla toimintalogiikka siirretty sinne controllereista. Nyt kerrostus on oikeaoppinen eli entiteetti -> repository -> service -> controller. Ohjelmaa ei ole vielä testattu kunnolla ja kaikki responseDTO:t puuttuu kokonaan.
+
+## 13.2
+Lisätty responseille DTO luokat + mapperit ja muutettu hiukan kansiorakennetta siistimmäksi.
+Arkkitehtuurivalintoja tehty jo tietoturvaa ajatellen. Tästä on hyvä kirjoittaa jo ennen Spring Securityä ettei tietoturva ole pelkästään jonkun paketin asentamista, vaan kaikki valinnat vaikuttavat siihen.
+Myös kerrostaminen itsessään lisää tietoturvaa, koska asiat on eristetty toisistaan.

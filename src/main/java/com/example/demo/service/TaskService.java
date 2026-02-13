@@ -4,11 +4,15 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.dto.AnswerDTO;
-import com.example.demo.dto.TaskDTO;
+import com.example.demo.dto.AnswerRequest;
+import com.example.demo.dto.AnswerResponse;
+import com.example.demo.dto.TaskRequest;
+import com.example.demo.dto.TaskResponse;
 import com.example.demo.entity.Answer;
 import com.example.demo.entity.Task;
 import com.example.demo.entity.User;
+import com.example.demo.mapper.AnswerMapper;
+import com.example.demo.mapper.TaskMapper;
 import com.example.demo.repository.AnswerRepository;
 import com.example.demo.repository.TaskRepository;
 import com.example.demo.repository.UserRepository;
@@ -28,17 +32,21 @@ public class TaskService {
     }
 
     // Hae kaikki taskit
-    public List<Task> getAll() {
-        return taskRepository.findAll();
+    public List<TaskResponse> getAll() {
+        return taskRepository.findAll()
+                .stream()
+                .map(TaskMapper::mapToResponse)
+                .toList();
     }
 
     // Hae taski ID:n perusteella
-    public Task getTask(Long id) {
-        return taskRepository.findById(id).orElse(null);
+    public TaskResponse getTask(Long id) {
+        Task task = taskRepository.findById(id).orElse(null);
+        return TaskMapper.mapToResponse(task);
     }
 
     // Lisää uusi taski
-    public void createTask(TaskDTO dto) {
+    public void createTask(TaskRequest dto) {
         User user = userRepository.findById(dto.getUserId()).orElseThrow();
         Task task = new Task();
         task.setTitle(dto.getTitle());
@@ -48,7 +56,7 @@ public class TaskService {
     }
 
     // Päivitä taski
-    public void updateTask(Long id, TaskDTO dto) {
+    public void updateTask(Long id, TaskRequest dto) {
         Task task = taskRepository.findById(id).orElseThrow();
         task.setTitle(dto.getTitle());
         task.setDescription(dto.getDescription());
@@ -61,7 +69,7 @@ public class TaskService {
     }
 
     // Lisää uusi vastaus
-    public void addAnswerToTask(Long id, AnswerDTO dto) {
+    public void addAnswerToTask(Long id, AnswerRequest dto) {
         Task task = taskRepository.findById(id).orElseThrow();
         User user = userRepository.findById(dto.getUserId()).orElseThrow();
         Answer answer = new Answer();
@@ -72,8 +80,10 @@ public class TaskService {
     }
 
     // Hae taskiin kuuluvat vastaukset
-    public List<Answer> getAnswerByTask(Long id) {
-        return answerRepository.findByTaskId(id);
+    public List<AnswerResponse> getAnswerByTask(Long id) {
+        return answerRepository.findByTaskId(id)
+                .stream()
+                .map(AnswerMapper::mapToResponse)
+                .toList();
     }
-
 }

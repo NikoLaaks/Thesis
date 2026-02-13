@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.AnswerResponse;
 import com.example.demo.entity.Answer;
 import com.example.demo.service.AnswerService;
 
@@ -26,7 +27,7 @@ public class AnswerController {
 
     // Vastauksen haku ID:llä
     @GetMapping("/{id}")
-    public Answer getAnswer(@PathVariable Long id) {
+    public AnswerResponse getAnswer(@PathVariable Long id) {
         return service.getAnswerById(id);
     }
 
@@ -37,7 +38,7 @@ public class AnswerController {
     }
 
     @GetMapping("/my")
-    public List<Answer> getAnswersByUser(@RequestParam Long userId) {
+    public List<AnswerResponse> getAnswersByUser(@RequestParam Long userId) {
         return service.getAnswersByUser(userId);
     }
 }

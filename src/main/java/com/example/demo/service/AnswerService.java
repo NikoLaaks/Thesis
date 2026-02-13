@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dto.AnswerResponse;
 import com.example.demo.entity.Answer;
+import com.example.demo.mapper.AnswerMapper;
 import com.example.demo.repository.AnswerRepository;
 
 @Service
@@ -17,8 +19,9 @@ public class AnswerService {
     }
 
     // Vastauksen haku ID:llä
-    public Answer getAnswerById(Long id) {
-        return answerRepository.findById(id).orElse(null);
+    public AnswerResponse getAnswerById(Long id) {
+        Answer answer = answerRepository.findById(id).orElseThrow();
+        return AnswerMapper.mapToResponse(answer);
     }
 
     // Vastauksen muokkaus
@@ -29,7 +32,12 @@ public class AnswerService {
     }
 
     // Hae omat vastaukset
-    public List<Answer> getAnswersByUser(Long userId) {
-        return answerRepository.findByUserId(userId);
+    public List<AnswerResponse> getAnswersByUser(Long userId) {
+        // Jokainen entity muunnetaan erikseen responseksi
+        return answerRepository.findByUserId(userId)
+                .stream()
+                .map(AnswerMapper::mapToResponse)
+                .toList();
     }
+
 }

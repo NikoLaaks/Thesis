@@ -7,8 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.UserDTO;
-import com.example.demo.entity.User;
+import com.example.demo.dto.UserRequest;
+import com.example.demo.dto.UserResponse;
 
 import com.example.demo.service.UserService;
 
@@ -30,13 +30,13 @@ public class UserController {
 
     // Hae kaikki käyttäjät
     @GetMapping
-    public List<User> getAll() {
+    public List<UserResponse> getAll() {
         return userService.getAll();
     }
 
     // Luo uusi käyttäjä
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody UserDTO dto) {
+    public ResponseEntity<Void> create(@RequestBody UserRequest dto) {
         userService.createUser(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

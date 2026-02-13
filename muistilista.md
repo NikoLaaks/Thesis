@@ -15,6 +15,15 @@
     - Sisältää sovelluksen ydintoiminnallisuuden ja liiketoimintalogiikan
     - Keskittää logiikan yhteen paikkaan ja tekee controllerista kevyen
     - Luokka annotoitu @Service
+5. DTO (Data transfer object)
+    - Käytetään tiedon siirtämiseen kerrosten ja rajapinnan välillä
+    - Määrittää mitä tietoa API palauttaa (response) tai vastaanottaa (request)
+    - Estää entityjen suoran palauttamisen ulospäin, ettei esim salasana vuoda
+6. Mapper (muuntokerros)
+    - Vastaa entityjen ja DTO:iden välisestä muunnoksesta
+    - Pitää controllerin ja servicen siisteinä
+    - Estää toistuvaa koodia
+    - Muuntaa Entity -> Response DTO, Request DTO -> Entity
 
 END OF LIST
 ---

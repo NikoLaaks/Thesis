@@ -1,6 +1,6 @@
 package com.example.demo.dto;
 
-public class TaskDTO {
+public class TaskRequest {
     private String title;
     private String description;
     private Long userId;

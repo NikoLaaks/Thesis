@@ -1,6 +1,6 @@
 package com.example.demo.dto;
 
-public class AnswerDTO {
+public class AnswerRequest {
     private String content;
     private Long userId;
 
