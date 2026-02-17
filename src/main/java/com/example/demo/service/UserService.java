@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.UserRequest;
@@ -14,9 +15,11 @@ import com.example.demo.repository.UserRepository;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository repository) {
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
         this.userRepository = repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // Hae kaikki käyttäjät
@@ -31,7 +34,8 @@ public class UserService {
     public void createUser(UserRequest dto) {
         User user = new User();
         user.setUserName(dto.getUsername());
-        user.setPassword(dto.getPassword());
+        String hashed = passwordEncoder.encode(dto.getPassword());
+        user.setPassword(hashed);
         user.setName(dto.getName());
         userRepository.save(user);
     }

@@ -41,3 +41,10 @@ Lisätty puuttuva service kerros ja samalla toimintalogiikka siirretty sinne con
 Lisätty responseille DTO luokat + mapperit ja muutettu hiukan kansiorakennetta siistimmäksi.
 Arkkitehtuurivalintoja tehty jo tietoturvaa ajatellen. Tästä on hyvä kirjoittaa jo ennen Spring Securityä ettei tietoturva ole pelkästään jonkun paketin asentamista, vaan kaikki valinnat vaikuttavat siihen.
 Myös kerrostaminen itsessään lisää tietoturvaa, koska asiat on eristetty toisistaan.
+
+## 17.2
+1. pom.xml tiedostoon lisätty Spring Security riippuvuus. Sen mukana tulee default konfiguraatiot, jotka sulkevat kaikki endpointit ja luo default login sivun. Käyttäjänimenä on user ja kertakäyttöisen salasanan löytää IDE:n terminaalista käynnistyksen jälkeen.
+2. Lisätty JJWT riippuvuudet api, impl ja jackson JWT toteutusta varten.
+3. Luodaan SecurityConfig, joka tulee olemaan se päätiedosto koko Spring Securityn hallinnalle. Tästä pitää tarkistaa että löytyy varmasti tekstiä jo teoriaosuudesta.
+4. Lisätty PasswordEncoder SecurityConfigiin ja lisäksi käyttäjienluonti endpointissa on nyt käytössä Hashaus. Tämä voidaan kuvata yksinkertaisesti että kyseessä ei ole mikään älyttömän vaikea prosessi
+5. SecurityFilterChain pitää luoda SecurityConfigiin, jotta saadaan otettua formlogin ja muut defaultjutut pois päältä. Tätä filterchainia tullaan sitten jatkossa muuttamaan oman tarpeen mukaan, mutta tässä tilanteessa vain poistetaan default juttuja
