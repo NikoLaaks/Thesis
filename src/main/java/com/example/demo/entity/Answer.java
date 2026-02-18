@@ -15,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -31,8 +32,9 @@ public class Answer {
     private LocalDateTime createdAt;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnoreProperties("answers") // Estää vastauksien listaamisen käyttäjän sisältä
+    @NotNull
     private User user;
 
     @ManyToOne

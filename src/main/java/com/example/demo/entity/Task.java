@@ -18,6 +18,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -39,8 +40,9 @@ public class Task {
     private List<Answer> answers;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnoreProperties("tasks") // Estää tehtävien listaamisen käyttäjän sisällä
+    @NotNull
     private User user;
 
     public Long getId() {

@@ -1,9 +1,12 @@
 package com.example.demo.dto;
 
+import java.util.Set;
+
 public class UserRequest {
     private String username;
     private String password;
     private String name;
+    private Set<String> roles;
 
     public String getUsername() {
         return username;
@@ -27,6 +30,14 @@ public class UserRequest {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
     }
 
 }

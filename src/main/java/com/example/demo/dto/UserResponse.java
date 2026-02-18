@@ -1,9 +1,18 @@
 package com.example.demo.dto;
 
+import java.util.Set;
+
 public class UserResponse {
 
     private Long id;
     private String name;
+    private Set<String> roles;
+
+    public UserResponse(Long id, String name, Set<String> roles) {
+        this.id = id;
+        this.name = name;
+        this.roles = roles;
+    }
 
     public UserResponse(Long id, String name) {
         this.id = id;
@@ -16,6 +25,10 @@ public class UserResponse {
 
     public String getName() {
         return name;
+    }
+
+    public Set<String> getRoles() {
+        return roles;
     }
 
 }

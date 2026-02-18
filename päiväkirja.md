@@ -48,3 +48,8 @@ Myös kerrostaminen itsessään lisää tietoturvaa, koska asiat on eristetty to
 3. Luodaan SecurityConfig, joka tulee olemaan se päätiedosto koko Spring Securityn hallinnalle. Tästä pitää tarkistaa että löytyy varmasti tekstiä jo teoriaosuudesta.
 4. Lisätty PasswordEncoder SecurityConfigiin ja lisäksi käyttäjienluonti endpointissa on nyt käytössä Hashaus. Tämä voidaan kuvata yksinkertaisesti että kyseessä ei ole mikään älyttömän vaikea prosessi
 5. SecurityFilterChain pitää luoda SecurityConfigiin, jotta saadaan otettua formlogin ja muut defaultjutut pois päältä. Tätä filterchainia tullaan sitten jatkossa muuttamaan oman tarpeen mukaan, mutta tässä tilanteessa vain poistetaan default juttuja
+
+## 18.2
+1. Roolit on nyt luotu. Pitää varmistaa teksteistä missä kohtaa rooleista aletaan puhumaan.
+2. SecurityFilterChain luotu SecurityConfig tiedostoon, missä avataan nyt kaikki endpointit aluksi
+3. Kaikilla tehtävillä ja vastauksilla pitää olla nyt käyttäjä eli null ei kelpaa.
