@@ -53,3 +53,7 @@ Myös kerrostaminen itsessään lisää tietoturvaa, koska asiat on eristetty to
 1. Roolit on nyt luotu. Pitää varmistaa teksteistä missä kohtaa rooleista aletaan puhumaan.
 2. SecurityFilterChain luotu SecurityConfig tiedostoon, missä avataan nyt kaikki endpointit aluksi
 3. Kaikilla tehtävillä ja vastauksilla pitää olla nyt käyttäjä eli null ei kelpaa.
+
+## 19.2
+1. Loginille tehty dto:t, service ja controller. JwtService tehty tokenia varten ja secret key löytyy oikeaoppisesti application.properties tiedostosta ja se haetaan @value annotaatiolla sieltä
+2. Kirjautusessa authenticationManager käyttää authentication provideria ja loadByUsername funktiota käyttäjänimen tarkistamiseen. Sen jälkeen passwordEncoderia salasanan automaattiseen vertailuun. Siitä ei ole omaa koodia vaan se tapahtuu taustalla ja palautuu Authentication object jos ok?
