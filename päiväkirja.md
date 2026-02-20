@@ -55,5 +55,8 @@ Myös kerrostaminen itsessään lisää tietoturvaa, koska asiat on eristetty to
 3. Kaikilla tehtävillä ja vastauksilla pitää olla nyt käyttäjä eli null ei kelpaa.
 
 ## 19.2
-1. Loginille tehty dto:t, service ja controller. JwtService tehty tokenia varten ja secret key löytyy oikeaoppisesti application.properties tiedostosta ja se haetaan @value annotaatiolla sieltä
+1. Loginille tehty dto:t, service ja controller. JwtService tehty tokenia varten ja secret key löytyy oikeaoppisesti application.properties tiedostosta ja se haetaan @value annotaatiolla sieltä. JWT servicessä metodit tokenin purkamiseen, validointiin ja eri asioiden tarkistamiseen tokenista.
 2. Kirjautusessa authenticationManager käyttää authentication provideria ja loadByUsername funktiota käyttäjänimen tarkistamiseen. Sen jälkeen passwordEncoderia salasanan automaattiseen vertailuun. Siitä ei ole omaa koodia vaan se tapahtuu taustalla ja palautuu Authentication object jos ok?
+
+## 20.2
+1. JWT filtterissä otetaan tokenista käyttäjänimi. Sen avulla haetaan käyttäjätiedot CustomUserDetailsServicen metodilla. Tarkistetaan onko token valid JWTServicen metodilla ja tämän jälkeen luodaan Authentication olio, johon haetut käyttäjätiedot tallennetaan. Tämä authentication olio tallennetaan sitten SecurityContextHolderiin, jotta se on käytettävissä pääsynhallinnassa koska security tarkistaa sieltä oikeudet. Tallennus tehdään threadiin ja sen elinkaari kestää vain sen pyynnön ajan.
