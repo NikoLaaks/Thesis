@@ -60,3 +60,6 @@ Myös kerrostaminen itsessään lisää tietoturvaa, koska asiat on eristetty to
 
 ## 20.2
 1. JWT filtterissä otetaan tokenista käyttäjänimi. Sen avulla haetaan käyttäjätiedot CustomUserDetailsServicen metodilla. Tarkistetaan onko token valid JWTServicen metodilla ja tämän jälkeen luodaan Authentication olio, johon haetut käyttäjätiedot tallennetaan. Tämä authentication olio tallennetaan sitten SecurityContextHolderiin, jotta se on käytettävissä pääsynhallinnassa koska security tarkistaa sieltä oikeudet. Tallennus tehdään threadiin ja sen elinkaari kestää vain sen pyynnön ajan.
+
+## 22.2
+1. Luonti-endpointit vaihdettu toimimaan nyt oikein, eli käyttäjä otetaan Spring Securityn contextista johon jwtfiltteri on sen laittanut. Eli taskia tai answeria luodessa kirjautunut käyttäjä merkitään omistajaksi.

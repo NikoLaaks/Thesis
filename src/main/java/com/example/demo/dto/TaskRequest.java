@@ -3,7 +3,6 @@ package com.example.demo.dto;
 public class TaskRequest {
     private String title;
     private String description;
-    private Long userId;
 
     public String getTitle() {
         return title;
@@ -20,13 +19,4 @@ public class TaskRequest {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
 }

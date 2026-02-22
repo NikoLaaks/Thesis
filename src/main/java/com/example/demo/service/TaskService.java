@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.List;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.AnswerRequest;
@@ -47,7 +48,8 @@ public class TaskService {
 
     // Lisää uusi taski
     public void createTask(TaskRequest dto) {
-        User user = userRepository.findById(dto.getUserId()).orElseThrow();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(username).orElseThrow();
         Task task = new Task();
         task.setTitle(dto.getTitle());
         task.setDescription(dto.getDescription());
@@ -71,7 +73,8 @@ public class TaskService {
     // Lisää uusi vastaus
     public void addAnswerToTask(Long id, AnswerRequest dto) {
         Task task = taskRepository.findById(id).orElseThrow();
-        User user = userRepository.findById(dto.getUserId()).orElseThrow();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(username).orElseThrow();
         Answer answer = new Answer();
         answer.setContent(dto.getContent());
         answer.setUser(user);

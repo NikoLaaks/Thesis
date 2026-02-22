@@ -5,15 +5,15 @@ import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.AnswerRequest;
 import com.example.demo.dto.AnswerResponse;
-import com.example.demo.entity.Answer;
 import com.example.demo.service.AnswerService;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/answers")
@@ -33,12 +33,14 @@ public class AnswerController {
 
     // Vastauksen muokkaus
     @PutMapping("/{id}")
-    public Answer update(@PathVariable Long id, @RequestBody Answer answerDetails) {
-        return service.updateAnswer(id, answerDetails);
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody AnswerRequest answerDetails) {
+        service.updateAnswer(id, answerDetails);
+        return ResponseEntity.ok().build();
+
     }
 
     @GetMapping("/my")
-    public List<AnswerResponse> getAnswersByUser(@RequestParam Long userId) {
-        return service.getAnswersByUser(userId);
+    public List<AnswerResponse> getAnswersByUser() {
+        return service.getAnswersByUser();
     }
 }

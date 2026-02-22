@@ -4,13 +4,15 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.example.demo.dto.UserResponse;
+import com.example.demo.entity.Role;
+import com.example.demo.entity.RoleName;
 import com.example.demo.entity.User;
 
 public class UserMapper {
     public static UserResponse mapToResponse(User user) {
 
-        Set<String> roleNames = user.getRoles().stream()
-                .map(role -> role.getName().name())
+        Set<RoleName> roleNames = user.getRoles().stream()
+                .map(Role::getName)
                 .collect(Collectors.toSet());
 
         return new UserResponse(

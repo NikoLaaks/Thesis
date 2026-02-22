@@ -2,13 +2,15 @@ package com.example.demo.dto;
 
 import java.util.Set;
 
+import com.example.demo.entity.RoleName;
+
 public class UserResponse {
 
     private Long id;
     private String name;
-    private Set<String> roles;
+    private Set<RoleName> roles;
 
-    public UserResponse(Long id, String name, Set<String> roles) {
+    public UserResponse(Long id, String name, Set<RoleName> roles) {
         this.id = id;
         this.name = name;
         this.roles = roles;
@@ -27,7 +29,7 @@ public class UserResponse {
         return name;
     }
 
-    public Set<String> getRoles() {
+    public Set<RoleName> getRoles() {
         return roles;
     }
 
