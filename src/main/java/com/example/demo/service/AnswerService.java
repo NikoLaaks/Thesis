@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +26,14 @@ public class AnswerService {
     }
 
     // Vastauksen haku ID:llä
+    @PreAuthorize("hasRole('TEACHER') or @answerSecurity.isOwner(#id, authentication)")
     public AnswerResponse getAnswerById(Long id) {
         Answer answer = answerRepository.findById(id).orElseThrow();
         return AnswerMapper.mapToResponse(answer);
     }
 
     // Vastauksen muokkaus
+    @PreAuthorize("@answerSecurity.isOwner(#id, authentication)")
     public Answer updateAnswer(Long id, AnswerRequest answerDetails) {
         Answer answer = answerRepository.findById(id).orElseThrow();
         answer.setContent(answerDetails.getContent());

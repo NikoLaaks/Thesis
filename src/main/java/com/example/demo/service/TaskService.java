@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -58,6 +59,7 @@ public class TaskService {
     }
 
     // Päivitä taski
+    @PreAuthorize("@taskSecurity.isOwner(#id, authentication)")
     public void updateTask(Long id, TaskRequest dto) {
         Task task = taskRepository.findById(id).orElseThrow();
         task.setTitle(dto.getTitle());
@@ -66,6 +68,7 @@ public class TaskService {
     }
 
     // Poista taski
+    @PreAuthorize("@taskSecurity.isOwner(#id, authentication)")
     public void deleteTask(Long id) {
         taskRepository.deleteById(id);
     }

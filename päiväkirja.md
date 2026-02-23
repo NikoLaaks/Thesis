@@ -66,3 +66,6 @@ Myös kerrostaminen itsessään lisää tietoturvaa, koska asiat on eristetty to
 
 ## 23.2
 1. Securityconfigissa luotu pääsynhallinta endpointteihin rooleihin perustuen. Tämä hoitaa vain roolien kautta pääsynhallintaa eikä puutu omistajuuteen ollenkaan.
+2. @preauthorize annotaatio toimii boolean arvoilla, eli se vain katsoo onko annettu arvo true vai false ja päättää pääsystä sen mukaan.
+3. Muutamaan endpointtiin lisätty @preauthorize omistajuudelle ja yhdessä answer endpointissa on yhdistelmä missä pitää olla joko resurssin omistaja tai opettaja.
+4. Projektissa ei ole käytössä isAuthority() tarkistusta suoraan, mutta hasRole on sama asia. Oppariin voisi kirjoittaa siitä että roolipohjainen malli katsottiin tässä työssä riittäväksi sovelluksen laajuuteen nähden, mutta järjestelmä olisi voitu toteuttaa permission pohjaisena mallina, joka mahdollistaisi tarkemman oikeuksien hallinnan.
