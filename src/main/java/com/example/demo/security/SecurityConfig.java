@@ -2,6 +2,7 @@ package com.example.demo.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,14 +33,31 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+                        // Public
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/users/**").permitAll()
+
+                        // Tools
                         .requestMatchers(
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/v3/api-docs/**",
                                 "/h2-console/**")
                         .permitAll()
+
+                        // Admin
+                        .requestMatchers("/api/users/**").hasRole("ADMIN")
+
+                        // Tasks
+                        .requestMatchers(HttpMethod.POST, "/api/tasks").hasRole("TEACHER")
+                        .requestMatchers(HttpMethod.PUT, "/api/tasks/*").hasRole("TEACHER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/tasks/*").hasRole("TEACHER")
+                        // Answers
+                        .requestMatchers(HttpMethod.POST, "/api/tasks/*/answers").hasRole("STUDENT")
+                        .requestMatchers(HttpMethod.PUT, "/api/answers/*").hasAnyRole("STUDENT")
+
+                        // All GET endpoints
+                        .requestMatchers(HttpMethod.GET, "/api/**").authenticated()
+
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

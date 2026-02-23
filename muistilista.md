@@ -38,9 +38,9 @@ END OF LIST
 
 | Endpoint | Metodi | Rooli | Selitys |
 |----------|--------|------|
-| /api/admin/users | GET | ADMIN | kaikkien käyttäjien haku |
-| /api/admin/users | POST | ADMIN | uuden käyttäjän lisäys |
-| /api/admin/users/{id} | DELETE | ADMIN | käyttäjän poistaminen |
+| /api/users | GET | ADMIN | kaikkien käyttäjien haku |
+| /api/users | POST | ADMIN | uuden käyttäjän lisäys |
+| /api/users/{id} | DELETE | ADMIN | käyttäjän poistaminen |
 
 ## Task-endpointit
 

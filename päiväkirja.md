@@ -63,3 +63,6 @@ Myös kerrostaminen itsessään lisää tietoturvaa, koska asiat on eristetty to
 
 ## 22.2
 1. Luonti-endpointit vaihdettu toimimaan nyt oikein, eli käyttäjä otetaan Spring Securityn contextista johon jwtfiltteri on sen laittanut. Eli taskia tai answeria luodessa kirjautunut käyttäjä merkitään omistajaksi.
+
+## 23.2
+1. Securityconfigissa luotu pääsynhallinta endpointteihin rooleihin perustuen. Tämä hoitaa vain roolien kautta pääsynhallintaa eikä puutu omistajuuteen ollenkaan.
