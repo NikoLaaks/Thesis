@@ -70,3 +70,6 @@ Myös kerrostaminen itsessään lisää tietoturvaa, koska asiat on eristetty to
 3. Muutamaan endpointtiin lisätty @preauthorize omistajuudelle ja yhdessä answer endpointissa on yhdistelmä missä pitää olla joko resurssin omistaja tai opettaja.
 4. Projektissa ei ole käytössä isAuthority() tarkistusta suoraan, mutta hasRole on sama asia. Oppariin voisi kirjoittaa siitä että roolipohjainen malli katsottiin tässä työssä riittäväksi sovelluksen laajuuteen nähden, mutta järjestelmä olisi voitu toteuttaa permission pohjaisena mallina, joka mahdollistaisi tarkemman oikeuksien hallinnan.
 5. Ensimmäiset testit toteutettu, jolla testataan roolia ja omistajuutta yhdessä answer endpointissa. Testejä voi tehdä lisää joihinkin kriittisiin endpointteihin. Testissä käytetään keinotekoisia resursseja mutta oikeita endpointteja. Testeistä voisi kirjoittaa jo teoriaan jotain.
+
+## 24.2
+1. Pieniä lisäyksiä tehty validointeihin, mutta ei mitenkään erityisen tarkasti.

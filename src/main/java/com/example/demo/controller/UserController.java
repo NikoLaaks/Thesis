@@ -12,6 +12,8 @@ import com.example.demo.dto.UserResponse;
 
 import com.example.demo.service.UserService;
 
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,7 +38,7 @@ public class UserController {
 
     // Luo uusi käyttäjä
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody UserRequest dto) {
+    public ResponseEntity<Void> create(@Valid @RequestBody UserRequest dto) {
         userService.createUser(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

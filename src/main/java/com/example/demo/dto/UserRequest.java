@@ -2,11 +2,23 @@ package com.example.demo.dto;
 
 import java.util.Set;
 
+import com.example.demo.entity.RoleName;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class UserRequest {
+
+    @NotBlank
+    @Size(min = 3, max = 50)
     private String username;
+
+    @NotBlank
+    @Size(min = 8)
     private String password;
+
     private String name;
-    private Set<String> roles;
+    private Set<RoleName> roles;
 
     public String getUsername() {
         return username;
@@ -32,11 +44,11 @@ public class UserRequest {
         this.name = name;
     }
 
-    public Set<String> getRoles() {
+    public Set<RoleName> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<String> roles) {
+    public void setRoles(Set<RoleName> roles) {
         this.roles = roles;
     }
 

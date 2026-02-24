@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.example.demo.dto.UserRequest;
 import com.example.demo.dto.UserResponse;
 import com.example.demo.entity.Role;
-import com.example.demo.entity.RoleName;
 import com.example.demo.entity.User;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.repository.RoleRepository;
@@ -47,10 +46,7 @@ public class UserService {
 
         Set<Role> roles = dto.getRoles()
                 .stream()
-                .map(roleNameStr -> {
-                    RoleName roleName = RoleName.valueOf(roleNameStr);
-                    return roleRepository.findByName(roleName).orElseThrow();
-                })
+                .map(roleName -> roleRepository.findByName(roleName).orElseThrow())
                 .collect(Collectors.toSet());
 
         user.setRoles(roles);

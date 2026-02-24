@@ -17,6 +17,8 @@ import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.TaskRepository;
 import com.example.demo.repository.UserRepository;
 
+import jakarta.transaction.Transactional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -27,6 +29,7 @@ import java.util.Set;
 
 import org.springframework.http.MediaType;
 
+@Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
 class DemoApplicationTests {
