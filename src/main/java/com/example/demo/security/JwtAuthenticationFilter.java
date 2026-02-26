@@ -46,7 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // 3. Otetaan username tokenista
         String username = jwtService.extractUsername(jwt);
 
-        // 4. Jos käyttäjä ei ole jo autentikoitu
+        // 4. Autentikoidaan käyttäjä ja asetetaan SecurityContextiin käyttäjäksi
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             UserDetails userDetails = CustomUserDetailsService.loadUserByUsername(username);
