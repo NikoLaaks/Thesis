@@ -9,15 +9,12 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.example.demo.dto.UserRequest;
 import com.example.demo.entity.Answer;
-import com.example.demo.entity.Role;
 import com.example.demo.entity.RoleName;
 import com.example.demo.entity.Task;
 import com.example.demo.entity.User;
 import com.example.demo.repository.AnswerRepository;
-import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.TaskRepository;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.security.SecurityConfig;
 import com.example.demo.service.UserService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,7 +33,6 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import java.util.Set;
 
 import org.springframework.http.MediaType;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Transactional
 @SpringBootTest
@@ -52,10 +48,6 @@ class DemoApplicationTests {
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
-	private RoleRepository roleRepository;
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-	@Autowired
 	private UserService userService;
 
 	private Long taskId;
@@ -63,29 +55,25 @@ class DemoApplicationTests {
 
 	@BeforeEach
 	void setup() {
-		Role teacherRole = roleRepository.findByName(RoleName.TEACHER).orElseThrow();
-		User teacher = new User();
-		teacher.setUserName("teacher1");
-		teacher.setPassword(passwordEncoder.encode("password"));
-		teacher.setRoles(Set.of(teacherRole));
-
-		Role studentRole = roleRepository.findByName(RoleName.STUDENT).orElseThrow();
-		User student = new User();
-		student.setUserName("student1");
-		student.setPassword(passwordEncoder.encode("password"));
-		student.setRoles(Set.of(studentRole));
 
 		// Tämä käyttäjä luodaan oikealla service funktiolla
 		UserRequest userRequest = new UserRequest();
-		userRequest.setUsername("student2");
+		userRequest.setUsername("student1");
 		userRequest.setPassword("password");
 		userRequest.setName("testioppilas");
 		userRequest.setRoles(Set.of(RoleName.STUDENT));
 		userService.createUser(userRequest);
 
-		userRepository.save(teacher);
-		userRepository.save(student);
-		userRepository.flush();
+		UserRequest userRequest2 = new UserRequest();
+		userRequest2.setUsername("teacher1");
+		userRequest2.setPassword("password");
+		userRequest2.setName("testiopettaja");
+		userRequest2.setRoles(Set.of(RoleName.TEACHER));
+		userService.createUser(userRequest2);
+
+		// Hae käyttäjät tietokannasta
+		User student = userRepository.findByUsername("student1").orElseThrow();
+		User teacher = userRepository.findByUsername("teacher1").orElseThrow();
 
 		Task task = new Task();
 		task.setTitle("Test Task");
@@ -99,6 +87,7 @@ class DemoApplicationTests {
 		answer.setTask(task);
 		Answer savedAnswer = answerRepository.save(answer);
 		answerId = savedAnswer.getId();
+		// VANHAT------------------------------------------------------------------------------
 	}
 
 	// Testaa, että vastauksen omistaja (student1) voi päivittää vastauksensa
@@ -147,6 +136,16 @@ class DemoApplicationTests {
 							}
 						"""))
 				.andExpect(status().isUnauthorized());
+		mockMvc.perform(post("/api/auth/login")
+				.with(csrf())
+				.contentType(MediaType.APPLICATION_JSON)
+				.content("""
+							{
+								"username": "admin",
+								"password": "admin"
+							}
+						"""))
+				.andExpect(status().isOk());
 	}
 
 	// Testaa tokenin generoinnin toimivuus
@@ -157,7 +156,7 @@ class DemoApplicationTests {
 				.with(csrf())
 				.content("""
 						{
-							"username": "student2",
+							"username": "student1",
 							"password": "password"
 						}
 						"""))
