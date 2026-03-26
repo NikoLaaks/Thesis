@@ -19,3 +19,7 @@ The REST service was implemented first, and Spring Security was added on top to 
 - Answer management (submit and retrieve answers)  
 - Role-based structure prepared for future access control implementation  
 - JSON-based communication for easy integration with client applications
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
