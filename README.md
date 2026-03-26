@@ -2,7 +2,7 @@
 
 This project is developed as part of the thesis *"Protecting REST API and Implementing User Management with Spring Security"*. The application is a simple task and answer management system, where users can create tasks and submit answers. Users are divided into roles, such as teachers, students, and administrators. 
 
-The initial version does not enforce access control based on roles; the main goal is to serve as a technical example for illustrating how Spring Security can be integrated and configured.
+The REST service was implemented first, and Spring Security was added on top to demonstrate authentication and access control.
 
 ## Technologies
 
